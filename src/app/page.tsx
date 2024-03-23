@@ -1,6 +1,6 @@
 'use client';
 import Image from "next/image";
-import {generateDoc} from "./generateDoc";
+import {generateDoc} from "./doc-generator";
 
 export default function Home() {
   return (
