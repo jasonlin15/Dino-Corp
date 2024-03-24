@@ -9,7 +9,7 @@ export enum QuestionTypes {
 
 export interface Question {
   question: string;
-  // Only applies to multiple choice
+  // Only applies to multiple choice and true/false
   answers?: string[];
   type: QuestionTypes;
 }
