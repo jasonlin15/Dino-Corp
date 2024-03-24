@@ -51,6 +51,9 @@ export async function parseResponse(response: string): Promise<Question[]> {
         question: currTrimmed.replace(/^[0-9]+./, '').trim(),
         type: currentType,
       };
+      if (currentType === QuestionTypes.TRUE_FALSE) {
+        newQuestion.answers = ["True", "False"]
+      }
       return [...prev, newQuestion]
     }, [])
 }
