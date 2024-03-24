@@ -1,6 +1,21 @@
-import {Question} from "@/app/types";
+import {ILastResponse, Question} from "@/app/types";
+import {generateDoc} from "@/app/doc-generator";
+import * as question from "@/app/questions";
+import {Dispatch, SetStateAction} from "react";
 
-export default function QuizOutput({questions}: { questions: Question[] }) {
+export default function QuizOutput({questions, clearQuestions, prevResp, setPrevResp}: { questions: Question[], clearQuestions: () => void, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>> }) {
+  async function makeEasier() {
+    if (!prevResp.lastResponse) return
+    const newMsg = await question.makeEasier(prevResp.lastResponse)
+    setPrevResp({lastResponse: newMsg})
+  }
+
+  async function makeHarder() {
+    if (!prevResp.lastResponse) return
+    const newMsg = await question.makeHarder(prevResp.lastResponse)
+    setPrevResp({lastResponse: newMsg})
+  }
+
   return (
     <>
       <h1 className='text-4xl text-center mb-4'>Your Quiz Output</h1>
@@ -21,18 +36,26 @@ export default function QuizOutput({questions}: { questions: Question[] }) {
         }
       </div>
       <div className="md:columns-2">
-        <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">
-          Make Questions Harder
-        </button>
-        <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Make Questions Easier
-        </button>
-        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Download Quiz as Word Document
-        </button>
-        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Make New Quiz
-        </button>
+        <form action={makeHarder}>
+          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+            Make Questions Harder
+          </button>
+        </form>
+        <form action={makeEasier}>
+          <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+            Make Questions Easier
+          </button>
+        </form>
+        <form>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => generateDoc(questions)}>
+            Download Quiz as Word Document
+          </button>
+        </form>
+        <form>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={clearQuestions}>
+            Make New Quiz
+          </button>
+        </form>
       </div>
     </>
   );
