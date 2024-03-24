@@ -1,0 +1,50 @@
+.courseName {
+    width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    height: 30px;
+    max-width: 70vw;
+}
+
+.generate {
+    background-color: white;
+    margin-top: 5%;
+    width: 150px;
+    height: 40px;
+    border-radius: 15px;
+    max-width: 30vw;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.numQuestion {
+    margin-top: 5%;
+    width: 160px;
+    border-radius: 10px;
+    text-align: center;
+    height: 30px;
+    max-width: 70vw;
+}
+
+.question {
+    margin-top: 5%;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    height: 30px;
+    max-width: 70vw;
+}
+
+.subjectName {
+    margin-top: 5%;
+    width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    height: 30px;
+    max-width: 70vw;
+}
