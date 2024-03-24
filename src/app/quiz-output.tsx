@@ -1,23 +1,29 @@
 import {ILastResponse, Question} from "@/app/types";
 import {generateDoc} from "@/app/doc-generator";
 import * as question from "@/app/questions";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 
 export default function QuizOutput({questions, setQuestions, prevResp, setPrevResp}: { questions: Question[], setQuestions: Dispatch<SetStateAction<Question[]>>, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>> }) {
+  const [gptRunning, setGptRunning] = useState(false)
+
   async function makeEasier() {
-    if (!prevResp.lastResponse) return
+    if (!prevResp.lastResponse || gptRunning) return
+    setGptRunning(true)
     const newMsg = await question.makeEasier(prevResp.lastResponse)
     setPrevResp({lastResponse: newMsg})
     const newQs = await question.parseResponse(newMsg.text)
     setQuestions(newQs)
+    setGptRunning(false)
   }
 
   async function makeHarder() {
-    if (!prevResp.lastResponse) return
+    if (!prevResp.lastResponse || gptRunning) return
+    setGptRunning(true)
     const newMsg = await question.makeHarder(prevResp.lastResponse)
     setPrevResp({lastResponse: newMsg})
     const newQs = await question.parseResponse(newMsg.text)
     setQuestions(newQs)
+    setGptRunning(false)
   }
 
   return (
@@ -40,13 +46,13 @@ export default function QuizOutput({questions, setQuestions, prevResp, setPrevRe
         }
       </div>
       <div className="md:columns-2">
-        <form action={makeHarder}>
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+        <form>
+          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4" onClick={makeHarder} disabled={gptRunning}>
             Make Questions Harder
           </button>
         </form>
-        <form action={makeEasier}>
-          <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" type="submit">
+        <form>
+          <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={makeEasier} disabled={gptRunning}>
             Make Questions Easier
           </button>
         </form>
