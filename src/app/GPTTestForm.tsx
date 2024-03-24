@@ -1,7 +1,7 @@
 'use client'
 import {useState} from 'react'
 
-import * as gpt from './chatgpt'
+import * as gpt from './questions'
 import {ChatMessage} from 'chatgpt'
 
 interface ILastResponse {
