@@ -2,22 +2,21 @@
 import * as React from "react";
 import { useState } from "react";
 import "../css/input.css"
+import {generateQuestions} from "./questions";
+import {parseResponse} from "./questions"
 
 export default function Choice() {
   const [courseName, setName] = useState("");
   const [subject, setSubject] = useState("");
-  const [question, setQuestion] = useState("Multiple Choice");
-  const [num, setNum] = useState("1");
-  const optionQuestion = [ 
-    { value: "Multiple Choice Question", label: "Multiple Choice Question" }, 
-    { value: "True or False", label: "True or False" }, 
-    { value: "Short Answer", label: "Short Answer" }, 
-    { value: "Long Answer", label: "Long Answer"}
-  ]; 
+  const [mcq, setMCQ] = useState(0);
+  const [tf, setTF] = useState(0);
+  const [sa, setSA] = useState(0);
+  const [la, setLA] = useState(0);
 
-  const click = () => {
-    if (courseName && subject && question && num) {
-      alert("Course Name: " + courseName + "\nSubject: " + subject + "\nQuestion: " + question + "\nNumber:" + num);
+  const click = async () => {
+    if (courseName && subject) {
+      const quary = await generateQuestions (subject, courseName, mcq, tf, sa, la);
+      const result = await parseResponse(quary);
     }
     else {
       alert("Please fill out all info");
@@ -32,27 +31,38 @@ export default function Choice() {
 
   return (
     <div className="inputContainer">
-      <div>
+      <h1 className="text-white text-2xl">Question Generator</h1>
+      <p className="text-white text-xs italic">Sponsored by Dino Luzzi</p>
+      <div className="my-10">
         <p className="text-white">Enter Your Course Name</p>
-        <input className="courseName" onChange={changeName} value={courseName}/>
+        <input className="courseName" onChange={changeName} value={courseName} placeholder="Enter A Course Name"/>
       </div>
-      <div className="my-3">
+      <div>
         <p className="text-white">Enter Your Subject</p>
-        <input className="subjectName" onChange={changeSubject} value={subject}/>
+        <input className="subjectName" onChange={changeSubject} value={subject} placeholder="Enter A Subject"/>
       </div>
-      <div className="my-2">
-        <p className="text-white">Select A Question Type</p>
-        <select className="question" value={question} onChange={e => setQuestion(e.target.value)}> 
-          {optionQuestion.map(option => ( 
-          <option key={option.value} value={option.value}> 
-            {option.label} 
-          </option> ))} 
-        </select> 
+      <div className="wtf">
+        <p className="text-white">Number of Questions for Multiple Choice</p>
+        <select className="numQuestion" onChange={e => setMCQ(e.target.value)}>
+          {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
+        </select>
       </div>
-      <div className="my-2">
-        <p className="text-white">Number of Questions</p>
-        <select className="numQuestion" onChange={e => setNum(e.target.value)}>
-          {[...Array(10)].map((_, i) => i + 1).map(i => <option key={i} value={i}>{i}</option>)}
+      <div className="wtf">
+        <p className="text-white">Number of Questions for True or False</p>
+        <select className="numQuestion" onChange={e => setTF(e.target.value)}>
+          {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
+        </select>
+      </div>
+      <div className="wtf">
+        <p className="text-white">Number of Questions for Short Answer</p>
+        <select className="numQuestion" onChange={e => setSA(e.target.value)}>
+          {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
+        </select>
+      </div>
+      <div className="wtf">
+        <p className="text-white">Number of Questions for Long Answer</p>
+        <select className="numQuestion" onChange={e => setLA(e.target.value)}>
+          {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
       <button className="generate" onClick={click}>Generate</button>
