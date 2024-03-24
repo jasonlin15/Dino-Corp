@@ -1,10 +1,10 @@
-import * as React from "react";
 import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import "../css/input.css"
 import {generateQuestions} from "./questions";
 import {parseResponse} from "./questions"
 import {ILastResponse, Question} from "@/app/types";
-
+import eric from "../img/dino_family.png"
+import Image from "next/image";
 export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispatch<SetStateAction<Question[]>>, setPrevResp: Dispatch<SetStateAction<ILastResponse>>}) {
   const [courseName, setName] = useState("");
   const [subject, setSubject] = useState("");
@@ -14,6 +14,7 @@ export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispa
   const [la, setLA] = useState(0);
   const [gptRunning, setGptRunning] = useState(false)
 
+  const redDino = "../img/reddino.png";
   const click = async () => {
     if (gptRunning) return
     setGptRunning(true)
@@ -38,6 +39,7 @@ export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispa
 
   return (
     <div className="inputContainer">
+      <Image className="py-2" src={eric}/>
       <h1 className="text-white text-2xl">Question Generator</h1>
       <p className="text-white text-xs italic">Sponsored by Dino Luzzi</p>
       <div className="my-10">

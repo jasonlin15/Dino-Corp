@@ -17,10 +17,10 @@
 }
 
 .inputContainer {
-    top: 5%;
+    top: 3.5%;
     position: absolute;
     width: 600px;
-    height: 850px;
+    height: 860px;
     max-width: 90vw;
     border-radius: 10px;
     background-color: rgb(50, 50, 50);
@@ -31,7 +31,7 @@
 }
 
 .numQuestion {
-    margin-top: 5%;
+    margin-top: 3.5%;
     width: 200px;
     border-radius: 10px;
     justify-content: center;
@@ -41,7 +41,7 @@
 }
 
 .question {
-    margin-top: 5%;
+    margin-top: 3.5%;
     width: 300px;
     border-radius: 10px;
     text-align: center;
@@ -50,7 +50,7 @@
 }
 
 .subjectName {
-    margin-top: 5%;
+    margin-top: 3.5%;
     width: 500px;
     border-radius: 10px;
     text-align: center;
@@ -63,7 +63,7 @@
     flex-direction: column;
     align-items: center;
     width: 500px;
-    padding: 0.9rem;
+    padding: 0.8rem;
     position: relative;
     display: flex;
     flex-direction: column;
