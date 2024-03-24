@@ -22,10 +22,10 @@ export default function Choice() {
       alert("Please fill out all info");
     }
   }
-  const changeName = event => {
+  const changeName = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setName(event.target.value);
   }
-  const changeSubject = event => {
+  const changeSubject = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSubject(event.target.value);
   }
 
