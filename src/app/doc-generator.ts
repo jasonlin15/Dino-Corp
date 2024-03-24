@@ -52,6 +52,22 @@ class DocumentCreator {
                     paragraphs.push(this.createBullet(bulletPoint, questionCount)); // Pass the questionCount as the instance number
                 });
             }
+            if (allQuestions[i].type == 'Short Answer') {
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+
+            } else if (allQuestions[i].type == 'Long Answer') {
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+                paragraphs.push(this.createHeading("\n"));
+
+
+            } else {
+                paragraphs.push(this.createHeading("\n"));
+            }
             questionCount++; // Increment the questionCount each time a new question is added
         }
         return paragraphs;
@@ -96,7 +112,8 @@ export function generateDoc(allQuestions: Question[]) {
 
     docx.Packer.toBlob(doc).then((blob) => {
         console.log(blob);
-        saveAs(blob, "example.docx");
+        const filename = `DinoCorpAssignment.docx`;
+        saveAs(blob, filename);
         console.log("Document created successfully");
     }).catch((error) => {
         console.error("Error creating document:", error);

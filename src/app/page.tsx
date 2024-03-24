@@ -36,10 +36,12 @@ export default function Home() {
   ]
   const [questions, setQuestions] = useState([] as Question[])
   const [prevResp, setPrevResp] = useState({} as ILastResponse)
+  const [courseName, setCourseName] = useState('');
+  const [subject, setSubject] = useState('');
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      {questions.length === 0 ? <Input setQuestions={setQuestions} setPrevResp={setPrevResp} /> : <QuizOutput questions={questions} setQuestions={setQuestions} prevResp={prevResp} setPrevResp={setPrevResp} />}
+      {questions.length === 0 ? <Input setQuestions={setQuestions} setPrevResp={setPrevResp} /> : <QuizOutput questions={questions} setQuestions={setQuestions} prevResp={prevResp} setPrevResp={setPrevResp}/>}
     </main>
   );
 }
