@@ -3,9 +3,9 @@ import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import "../css/input.css"
 import {generateQuestions} from "./questions";
 import {parseResponse} from "./questions"
-import {Question} from "@/app/types";
+import {ILastResponse, Question} from "@/app/types";
 
-export default function Choice({setQuestions}: {setQuestions: Dispatch<SetStateAction<Question[]>>}) {
+export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispatch<SetStateAction<Question[]>>, setPrevResp: Dispatch<SetStateAction<ILastResponse>>}) {
   const [courseName, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [mcq, setMCQ] = useState(0);
@@ -16,6 +16,7 @@ export default function Choice({setQuestions}: {setQuestions: Dispatch<SetStateA
   const click = async () => {
     if (courseName && subject) {
       const quary = await generateQuestions (subject, courseName, mcq, tf, sa, la);
+      setPrevResp({lastResponse: quary})
       const result = await parseResponse(quary.text);
       setQuestions(result)
     }

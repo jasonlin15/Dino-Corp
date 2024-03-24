@@ -3,17 +3,21 @@ import {generateDoc} from "@/app/doc-generator";
 import * as question from "@/app/questions";
 import {Dispatch, SetStateAction} from "react";
 
-export default function QuizOutput({questions, clearQuestions, prevResp, setPrevResp}: { questions: Question[], clearQuestions: () => void, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>> }) {
+export default function QuizOutput({questions, setQuestions, prevResp, setPrevResp}: { questions: Question[], setQuestions: Dispatch<SetStateAction<Question[]>>, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>> }) {
   async function makeEasier() {
     if (!prevResp.lastResponse) return
     const newMsg = await question.makeEasier(prevResp.lastResponse)
     setPrevResp({lastResponse: newMsg})
+    const newQs = await question.parseResponse(newMsg.text)
+    setQuestions(newQs)
   }
 
   async function makeHarder() {
     if (!prevResp.lastResponse) return
     const newMsg = await question.makeHarder(prevResp.lastResponse)
     setPrevResp({lastResponse: newMsg})
+    const newQs = await question.parseResponse(newMsg.text)
+    setQuestions(newQs)
   }
 
   return (
@@ -47,12 +51,18 @@ export default function QuizOutput({questions, clearQuestions, prevResp, setPrev
           </button>
         </form>
         <form>
-          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => generateDoc(questions)}>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={(e) => {
+            e.preventDefault()
+            generateDoc(questions)
+          }}>
             Download Quiz as Word Document
           </button>
         </form>
         <form>
-          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={clearQuestions}>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={(e) => {
+            e.preventDefault()
+            setQuestions([])
+          }}>
             Make New Quiz
           </button>
         </form>
