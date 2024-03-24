@@ -34,12 +34,12 @@ export default function Home() {
       type: QuestionTypes.LONG_ANSWER,
     }
   ]
-  const [questions, setQuestions] = useState([...testQuestions] as Question[])
+  const [questions, setQuestions] = useState([] as Question[])
   const [prevResp, setPrevResp] = useState({} as ILastResponse)
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      {questions.length === 0 ? <Input /> : <QuizOutput questions={questions} clearQuestions={() => setQuestions([])} prevResp={prevResp} setPrevResp={setPrevResp} />}
+      {questions.length === 0 ? <Input setQuestions={setQuestions} /> : <QuizOutput questions={questions} clearQuestions={() => setQuestions([])} prevResp={prevResp} setPrevResp={setPrevResp} />}
     </main>
   );
 }
