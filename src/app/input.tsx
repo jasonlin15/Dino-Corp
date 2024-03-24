@@ -1,11 +1,11 @@
-'use client'
 import * as React from "react";
-import { useState } from "react";
+import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import "../css/input.css"
 import {generateQuestions} from "./questions";
 import {parseResponse} from "./questions"
+import {Question} from "@/app/types";
 
-export default function Choice() {
+export default function Choice({setQuestions}: {setQuestions: Dispatch<SetStateAction<Question[]>>}) {
   const [courseName, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [mcq, setMCQ] = useState(0);
@@ -17,15 +17,17 @@ export default function Choice() {
     if (courseName && subject) {
       const quary = await generateQuestions (subject, courseName, mcq, tf, sa, la);
       const result = await parseResponse(quary.text);
+      setQuestions(result)
     }
     else {
       alert("Please fill out all info");
     }
   }
-  const changeName = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+
+  const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   }
-  const changeSubject = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const changeSubject = (event: ChangeEvent<HTMLInputElement>) => {
     setSubject(event.target.value);
   }
 
