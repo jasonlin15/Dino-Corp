@@ -23,6 +23,7 @@ export default function Choice({setQuestions}: {setQuestions: Dispatch<SetStateA
       alert("Please fill out all info");
     }
   }
+
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   }
