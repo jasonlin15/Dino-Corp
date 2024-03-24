@@ -27,7 +27,7 @@ export async function generateQuestions(topic: string, course: string, multipleC
   return await api.sendMessage(query);
 }
 
-export function parseResponse(response: string): Question[] {
+export async function parseResponse(response: string): Promise<Question[]> {
   let currentType = QuestionTypes.MULTIPLE_CHOICE;
   return response
     .split('\n')
