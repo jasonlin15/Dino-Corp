@@ -16,7 +16,7 @@ export default function Choice() {
   const click = async () => {
     if (courseName && subject) {
       const quary = await generateQuestions (subject, courseName, mcq, tf, sa, la);
-      const result = await parseResponse(quary);
+      const result = await parseResponse(quary.text);
     }
     else {
       alert("Please fill out all info");
@@ -43,25 +43,25 @@ export default function Choice() {
       </div>
       <div className="wtf">
         <p className="text-white">Number of Questions for Multiple Choice</p>
-        <select className="numQuestion" onChange={e => setMCQ(e.target.value)}>
+        <select className="numQuestion" onChange={e => setMCQ(Number(e.target.value))}>
           {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
       <div className="wtf">
         <p className="text-white">Number of Questions for True or False</p>
-        <select className="numQuestion" onChange={e => setTF(e.target.value)}>
+        <select className="numQuestion" onChange={e => setTF(Number(e.target.value))}>
           {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
       <div className="wtf">
         <p className="text-white">Number of Questions for Short Answer</p>
-        <select className="numQuestion" onChange={e => setSA(e.target.value)}>
+        <select className="numQuestion" onChange={e => setSA(Number(e.target.value))}>
           {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
       <div className="wtf">
         <p className="text-white">Number of Questions for Long Answer</p>
-        <select className="numQuestion" onChange={e => setLA(e.target.value)}>
+        <select className="numQuestion" onChange={e => setLA(Number(e.target.value))}>
           {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
