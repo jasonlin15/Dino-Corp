@@ -1,3 +1,5 @@
+import {ChatMessage} from "chatgpt";
+
 export enum QuestionTypes {
   MULTIPLE_CHOICE = 'Multiple Choice',
   TRUE_FALSE = 'True/False',
@@ -10,4 +12,8 @@ export interface Question {
   // Only applies to multiple choice
   answers?: string[];
   type: QuestionTypes;
+}
+
+export interface ILastResponse {
+  lastResponse?: ChatMessage
 }
