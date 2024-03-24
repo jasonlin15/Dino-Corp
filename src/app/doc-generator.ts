@@ -1,16 +1,6 @@
 // Generate a CV
-import {
-    AlignmentType,
-    Document,
-    HeadingLevel,
-    Packer,
-    Paragraph,
-    Tab,
-    TabStopPosition,
-    TabStopType,
-    TextRun
-} from "docx";
 import * as docx from "docx";
+import {Document, HeadingLevel, Paragraph} from "docx";
 import {saveAs} from "file-saver";
 
 interface Question {
@@ -37,29 +27,45 @@ for (let j = 0; j < numQuestions.length; j++) {
 
 class DocumentCreator {
     // tslint:disable-next-line: typedef
-    public create(allQuestions: [Question[]]): Document {
+    public create(allQuestions: Question[]): Document {
+        const paragraphs = this.generateSections(allQuestions);
+        const section = {
+            properties: {},
+            children: paragraphs,
+        };
         return new Document({
-            sections: [
-                {
-                    children: [
-                        this.createHeading(insertType[0]),
-                        ...allQuestions.map((question ) => {
-                                const arr: Paragraph[] = [];
-                                arr.push(
-                                    this.createSubHeading(question[0].Question),
-                                );
-                                const bulletPoints = question[0].answers;
-                                bulletPoints.forEach((bulletPoint) => {
-                                    arr.push(this.createBullet(bulletPoint));
-                                });
-
-                                return arr;
-                            })
-                            .reduce((prev, curr) => prev.concat(curr), []),
-                    ],
-                },
-            ],
+            sections: [section],
         });
+    }
+    private generateSections(allQuestions: Question[]): Paragraph[] {
+        const paragraphs: Paragraph[] = [];
+        this.createHeading(allQuestions[0].type);
+        for(let j=0; j<numQuestions[0]; j++) {
+            paragraphs.push(
+                this.createSubHeading(allQuestions[j].Question),
+            );
+            const bulletPoints = allQuestions[j].answers;
+            bulletPoints.forEach((bulletPoint: string) => {
+                paragraphs.push(this.createBullet(bulletPoint));
+            });
+        }
+
+        let index = 0;
+        for (let i = 1; i<numQuestions.length; i++){
+            index += numQuestions[i-1];
+            this.createHeading(allQuestions[index].type);
+            for(let j=0; j<numQuestions[i]; j++) {
+                paragraphs.push(
+                    this.createSubHeading(allQuestions[j].Question),
+                );
+                const bulletPoints = allQuestions[j].answers;
+                bulletPoints.forEach((bulletPoint: string) => {
+                    paragraphs.push(this.createBullet(bulletPoint));
+                });
+            }
+        }
+
+        return paragraphs;
     }
 
     public createHeading(text: string): Paragraph {
@@ -89,7 +95,7 @@ class DocumentCreator {
 export function generateDoc() {
     const documentCreator = new DocumentCreator();
 
-    const doc = documentCreator.create([allQuestions]);
+    const doc = documentCreator.create(allQuestions);
 
     docx.Packer.toBlob(doc).then((blob) => {
         console.log(blob);
