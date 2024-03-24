@@ -1,8 +1,8 @@
 export enum QuestionTypes {
-  MULTIPLE_CHOICE = 'multiple choice',
-  TRUE_FALSE = 'true/false',
-  SHORT_ANSWER = 'short answer',
-  LONG_ANSWER = 'long answer',
+  MULTIPLE_CHOICE = 'Multiple Choice',
+  TRUE_FALSE = 'True/False',
+  SHORT_ANSWER = 'Short Answer',
+  LONG_ANSWER = 'Long Answer',
 }
 
 export interface Question {

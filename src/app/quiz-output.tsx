@@ -1,4 +1,6 @@
+'use client'
 import {Question} from "@/app/types";
+import {generateDoc} from "@/app/doc-generator";
 
 export default function QuizOutput({questions}: { questions: Question[] }) {
   return (
@@ -21,18 +23,26 @@ export default function QuizOutput({questions}: { questions: Question[] }) {
         }
       </div>
       <div className="md:columns-2">
-        <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">
-          Make Questions Harder
-        </button>
-        <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Make Questions Easier
-        </button>
-        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Download Quiz as Word Document
-        </button>
-        <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Make New Quiz
-        </button>
+        <form>
+          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">
+            Make Questions Harder
+          </button>
+        </form>
+        <form>
+          <button className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Make Questions Easier
+          </button>
+        </form>
+        <form>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => generateDoc(questions)}>
+            Download Quiz as Word Document
+          </button>
+        </form>
+        <form>
+          <button className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Make New Quiz
+          </button>
+        </form>
       </div>
     </>
   );
