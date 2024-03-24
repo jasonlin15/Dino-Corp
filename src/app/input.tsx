@@ -12,8 +12,11 @@ export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispa
   const [tf, setTF] = useState(0);
   const [sa, setSA] = useState(0);
   const [la, setLA] = useState(0);
+  const [gptRunning, setGptRunning] = useState(false)
 
   const click = async () => {
+    if (gptRunning) return
+    setGptRunning(true)
     if (courseName && subject) {
       const quary = await generateQuestions (subject, courseName, mcq, tf, sa, la);
       setPrevResp({lastResponse: quary})
@@ -23,6 +26,7 @@ export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispa
     else {
       alert("Please fill out all info");
     }
+    setGptRunning(false)
   }
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +72,7 @@ export default function Choice({setQuestions, setPrevResp}: {setQuestions: Dispa
           {[...Array(11)].map((_, i) => i).map(i => <option key={i} value={i}>{i}</option>)}
         </select>
       </div>
-      <button className="generate" onClick={click}>Generate</button>
+      <button className="generate" onClick={click} disabled={gptRunning}>Generate</button>
     </div>
   )
 }
