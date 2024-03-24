@@ -2,7 +2,7 @@
 import * as docx from "docx";
 import {Document, HeadingLevel, Paragraph} from "docx";
 import {saveAs} from "file-saver";
-import {Question} from "./questions";
+import {Question} from "@/app/types";
 class DocumentCreator {
     // tslint:disable-next-line: typedef
     public create(allQuestions: Question[]): Document {
