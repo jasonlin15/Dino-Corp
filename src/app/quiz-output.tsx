@@ -3,7 +3,7 @@ import {generateDoc} from "@/app/doc-generator";
 import * as question from "@/app/questions";
 import {Dispatch, SetStateAction, useState} from "react";
 
-export default function QuizOutput({questions, setQuestions, prevResp, setPrevResp}: { questions: Question[], setQuestions: Dispatch<SetStateAction<Question[]>>, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>> }) {
+export default function QuizOutput({questions, setQuestions, prevResp, setPrevResp,}: { questions: Question[], setQuestions: Dispatch<SetStateAction<Question[]>>, prevResp: ILastResponse, setPrevResp: Dispatch<SetStateAction<ILastResponse>>,}) {
   const [gptRunning, setGptRunning] = useState(false)
 
   async function makeEasier() {
