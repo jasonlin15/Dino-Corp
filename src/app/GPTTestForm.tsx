@@ -107,7 +107,7 @@ export default function GPTTestForm() {
 ### Long Answer Questions
 17. Compare and contrast FAT32 and NTFS file systems in terms of features and limitations.
 18. Discuss the importance of file system consistency and explain how it is maintained in operating systems.`
-    const msg = gpt.parseResponse(test)
+    const msg = await gpt.parseResponse(test)
     console.log(msg)
   }
 

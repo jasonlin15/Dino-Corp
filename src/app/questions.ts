@@ -1,19 +1,6 @@
 'use server'
 import {ChatGPTAPI, ChatMessage} from 'chatgpt';
-
-enum QuestionTypes {
-  MULTIPLE_CHOICE = 'multiple choice',
-  TRUE_FALSE = 'true/false',
-  SHORT_ANSWER = 'short answer',
-  LONG_ANSWER = 'long answer',
-}
-
-export interface Question {
-  question: string;
-  // Only applies to multiple choice
-  answers?: string[];
-  type: QuestionTypes;
-}
+import {Question, QuestionTypes} from "@/app/types";
 
 const api = new ChatGPTAPI({
   apiKey: process.env.CHATGPT_API_KEY!,
